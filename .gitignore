@@ -18,3 +18,8 @@ demo/out/
 .vscode/
 .idea/
 .DS_Store
+
+# Visual Studio
+.vs/
+*.vsidx
+
