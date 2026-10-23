@@ -1,0 +1,7 @@
+# 统一换行符，避免 Windows 提交把整个仓库变成 CRLF
+* text=auto eol=lf
+
+# 二进制
+*.pdf binary
+*.jpg binary
+*.png binary

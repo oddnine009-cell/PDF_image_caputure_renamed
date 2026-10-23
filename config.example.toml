@@ -1,0 +1,43 @@
+# 复制成 config.toml 后按需修改：spn scan ... --config config.toml
+
+mode = "copy"          # copy=复制到 out/ 不动原件；rename=原地改名
+pattern = "{name}"     # 也可 "{name}_{stem}"、"{name}-{sid}"
+outdir = "out"
+dpi = 300
+
+# 只把姓名那一小块送去识别：又快又准。
+# 坐标系：页面左上角为 (0,0)，全部取 0~1 的比例。
+# 不确定数值时，先用任意 PDF 阅读器看光标位置，或跑 tools/preview_region.py。
+[region]
+page = 1
+x0 = 0.10
+y0 = 0.04
+x1 = 0.62
+y1 = 0.13
+
+# 允许的识别来源。auto 会按「文字层 -> 旁车 json」顺序尝试，都没有就报错让你指定。
+# 可选：auto | textlayer | json | baidu | paddle
+ocr = "auto"
+
+[match]
+# 三态判定阈值：先按 50 份样本校准，再批量跑。
+ok_threshold = 0.80          # 大于等于它且领先次选 -> 直接命名
+review_threshold = 0.58      # 整页识别时的复核下限
+review_threshold_roi = 0.48  # 框了姓名区域时的复核下限（噪声低，可放宽）
+min_margin = 0.08            # 与次选的差距，防止「张三/张山」互串
+name_min_len = 2
+name_max_len = 4
+context_bonus = 0.05         # 出现在「姓名：」等字段附近时加分
+
+# Windows OCR 换个渲染宽度结果就会变，跑两档取并集比单档稳
+# （实测单档命中率 50%~90% 抖动，双档稳定）
+ocr_widths = [1200, 1400]
+
+# 视觉兜底：只对没认准的件，把姓名区域截图再交给 DeepSeek 读一遍。
+# 模型只负责认字，最终仍然走名单匹配；没有 DEEPSEEK_API_KEY 会自动跳过。
+[vision]
+mode = "off"                                  # off | auto | always
+model = "deepseek-flash"                      # deepseek-v4-pro 不支持视觉
+base_url = "https://api.deepseek.com"         # 自建/代理改这里（需 OpenAI 兼容）
+detail = "high"
+timeout = 45.0

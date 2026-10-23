@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "student-pdf-namer"
+version = "0.4.0"
+description = "按手写姓名自动命名学生作业 PDF：本地 OCR + 花名册闭集匹配 + 人工复核 + 可回滚"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "student-pdf-namer contributors" }]
+keywords = ["ocr", "pdf", "handwriting", "chinese", "rename", "teacher", "windows"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: Microsoft :: Windows",
+    "Environment :: Console",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Education",
+    "Topic :: Multimedia :: Graphics :: Capture :: Scanned Documents",
+    "Natural Language :: Chinese (Simplified)",
+]
+dependencies = []
+
+[project.optional-dependencies]
+pinyin = ["pypinyin>=0.51"]
+fast = ["rapidfuzz>=3.6"]
+pdf = ["pymupdf>=1.24"]
+local-ocr = ["paddleocr>=2.7", "paddlepaddle>=2.6", "pillow>=10"]
+all = ["pypinyin>=0.51", "rapidfuzz>=3.6", "pymupdf>=1.24"]
+
+[project.scripts]
+spn = "spn.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/your-name/student-pdf-namer"
+Issues = "https://github.com/your-name/student-pdf-namer/issues"
+
+[tool.setuptools]
+packages = ["spn"]
+
+[tool.setuptools.package-data]
+spn = ["win_pdf_ocr.ps1"]

@@ -1,0 +1,16 @@
+# 默认零依赖：Windows 10/11 上直接可用（系统自带 PDF 渲染 + 中文 OCR）。
+# 下面这些全部是可选增强，装不装都能跑。
+
+# 读 PDF 文字层 / 非 Windows 平台渲染（Windows 上可省）
+# pymupdf>=1.24
+
+# 拼音兜底（同音不同字，如 张珊/张山）
+# pypinyin>=0.51
+
+# 更快的编辑距离（纯 Python 实现也够用）
+# rapidfuzz>=3.6
+
+# 本地 OCR（非 Windows，或想要更好的手写识别）
+# paddleocr>=2.7
+# paddlepaddle>=2.6
+# pillow>=10
